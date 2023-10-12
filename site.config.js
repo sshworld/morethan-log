@@ -20,6 +20,7 @@ const CONFIG = {
   blog: {
     title: "sshworld",
     description: "welcome to sshworld!",
+    theme: "light",
   },
 
   // CONFIG configration (required)
