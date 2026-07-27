@@ -60,14 +60,16 @@ async function getPageProperties(
             if (rawUsers[i][0][1]) {
               const userId = rawUsers[i][0]
               const res: any = await api.getUsers(userId)
-              const resValue =
+              const rawValue =
                 res?.recordMapWithRoles?.notion_user?.[userId[1]]?.value
+              // Notion API may nest the record as { value, role }
+              const resValue = rawValue?.value ?? rawValue
               const user = {
-                id: resValue?.id,
+                id: resValue?.id ?? null,
                 name:
                   resValue?.name ||
                   `${resValue?.family_name}${resValue?.given_name}` ||
-                  undefined,
+                  null,
                 profile_photo: resValue?.profile_photo || null,
               }
               users.push(user)
