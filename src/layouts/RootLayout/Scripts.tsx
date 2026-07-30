@@ -18,14 +18,6 @@ const Scripts: React.FC = () => (
         </Script>
       </>
     )}
-    {CONFIG?.googleAdsense?.enable === true && CONFIG.isProd && (
-      <Script
-        async
-        strategy="afterInteractive"
-        crossOrigin="anonymous"
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CONFIG.googleAdsense.config.client}`}
-      />
-    )}
   </>
 )
 

@@ -36,6 +36,15 @@ class MyDocument extends Document {
               />
             </>
           )}
+          {/* google adsense — must be server-rendered in <head> so that
+              AdSense's snippet check and crawler see it without running JS */}
+          {CONFIG.googleAdsense.enable === true && CONFIG.isProd && (
+            <script
+              async
+              crossOrigin="anonymous"
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${CONFIG.googleAdsense.config.client}`}
+            />
+          )}
         </Head>
         <body>
           <Main />

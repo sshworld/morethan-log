@@ -16,6 +16,15 @@ const nextConfig = {
       },
     ],
   },
+  // /feed is the canonical RSS path (advertised by <link rel="alternate">).
+  // These are the paths people type by hand.
+  async redirects() {
+    return ['/rss', '/rss.xml', '/feed.xml'].map((source) => ({
+      source,
+      destination: '/feed',
+      permanent: true,
+    }))
+  },
 }
 
 module.exports = nextConfig
