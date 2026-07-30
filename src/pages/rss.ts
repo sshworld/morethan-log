@@ -43,7 +43,7 @@ ${categories ? `      ${categories}\n` : ""}    </item>`
     <description>${escapeXml(CONFIG.blog.description)}</description>
     <language>${CONFIG.lang}</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${CONFIG.link}/feed" rel="self" type="application/rss+xml" />
+    <atom:link href="${CONFIG.link}/rss" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>`
