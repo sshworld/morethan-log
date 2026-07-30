@@ -37,3 +37,5 @@ yarn-error.log*
 # public/sitemap.xml
 
 /.firebase
+# typescript incremental build info
+*.tsbuildinfo
