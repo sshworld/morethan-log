@@ -16,6 +16,11 @@ const nextConfig = {
       },
     ],
   },
+  // /feed 는 라우트가 없어서 [slug] 캐치올이 200 으로 받아왔다.
+  // 색인에 남은 걸 정리하려면 404 보다 301 이 빠르다. 정식 경로는 /rss.
+  async redirects() {
+    return [{ source: '/feed', destination: '/rss', permanent: true }]
+  },
 }
 
 module.exports = nextConfig

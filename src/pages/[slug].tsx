@@ -23,7 +23,9 @@ export const getStaticPaths = async () => {
 
   return {
     paths: filteredPost.map((row) => `/${row.slug}`),
-    fallback: true,
+    // "blocking": 미지의 경로도 서버에서 결론을 낸 뒤 응답한다.
+    // true 였을 때는 셸을 200 으로 먼저 내보내서 없는 글도 200 이 됐다.
+    fallback: "blocking",
   }
 }
 
@@ -36,7 +38,14 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const detailPosts = filterPosts(posts, filter)
   const postDetail = detailPosts.find((t: any) => t.slug === slug)
-  const recordMap = await getRecordMap(postDetail?.id!)
+
+  // 없는 slug 를 200 + 에러 화면으로 내보내면 soft 404 다.
+  // 크롤러가 오타 URL 까지 색인 대상으로 본다.
+  if (!postDetail) {
+    return { notFound: true, revalidate: CONFIG.revalidateTime }
+  }
+
+  const recordMap = await getRecordMap(postDetail.id)
 
   await queryClient.prefetchQuery(queryKey.post(`${slug}`), () => ({
     ...postDetail,
