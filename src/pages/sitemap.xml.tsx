@@ -14,14 +14,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   tomorrow.setDate(tomorrow.getDate() + 1)
   tomorrow.setHours(0, 0, 0, 0)
 
-  // filterPosts 의 화이트리스트(Public 만) 대신 Private 만 차단한다.
-  // 색인 대상은 status 값이 제각각이라, 허용 목록으로 걸면 privacy-policy 같은
-  // 정적 페이지가 조용히 빠진다. 여기서 막아야 하는 건 검토 전 초안 하나다.
+  // 허용 목록으로 거르면 status·type 값이 제각각인 정적 페이지(privacy-policy 등)가
+  // 조용히 빠진다. 기존 동작을 유지하고 막아야 할 것만 뺀다 — 검토 전 초안과 예약 발행분.
   const posts = (await getPosts()).filter((post) => {
     if (!post.title || !post.slug) return false
     if (post.status?.[0] === "Private") return false
-    if (!["Post", "Page"].includes(post.type?.[0])) return false
-    // 예약 발행분 제외
     return new Date(post.date?.start_date || post.createdTime) <= tomorrow
   })
 
