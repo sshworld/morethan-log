@@ -5,9 +5,9 @@ import { CONFIG } from "site.config"
 import { getPosts } from "src/apis/notion-client/getPosts"
 
 /**
- * /sitemap 과 /sitemap.xml 이 같은 내용을 서빙한다.
- * robots.txt 는 next-sitemap 이 /sitemap.xml 로 생성하니 그쪽이 정식 경로고,
- * /sitemap 은 손으로 치기 쉬운 별칭이다. 리다이렉트 대신 라우트를 두 개 둔다.
+ * 사이트맵 경로는 /sitemap 하나다. public/robots.txt 도 그것만 가리킨다.
+ * next-sitemap 은 getServerSideSitemap 헬퍼 때문에 남아있고,
+ * robots.txt·public/sitemap.xml 을 만들던 postbuild 스크립트는 제거했다.
  */
 export const sitemapProps: GetServerSideProps = async (ctx) => {
   // CDN 캐시. 없으면 크롤러 요청마다 getPosts() 가 Notion 을 전량 조회하다 500 이 난다.
